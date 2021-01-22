@@ -29,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
  * @author ntan2
  */
 public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.CallbackDelete, IFAddDish.CallbackAdd, IFEditDish.CallbackEdit,
-        IFRemoveDish.CallbackDelete, IFFindDish.CallbackFindDish, IFAddDrink.CallbackAdd, IFEditDrink.CallbackEdit, IFRemoveDrink.CallbackDelete, IFFindDrink.CallbackFindDrink {
+        IFRemoveDish.CallbackDelete, IFFindDish.CallbackFindDish {
 
     Menu m;
     MenuDAOImp menuDAO;
@@ -55,7 +55,6 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
             }
         });
         loadDishList(null);
-        loadDrinkList(null);
     }
 
     private void loadMenuList() {
@@ -91,24 +90,7 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
         }
         tblDish.setModel(model);
     }
-
-    private void loadDrinkList(String name) {
-        DefaultTableModel model = (DefaultTableModel) tblDrink.getModel();
-        model.setRowCount(0);
-        drinkDAO = new DrinkDAOImp();
-        List<Drink> lstDrink = new ArrayList<>(drinkDAO.lstDrink(name));
-        for (Drink d : lstDrink) {
-            String status = "";
-            if (d.isStatus() == true) {
-                status = "Còn";
-            } else {
-                status = "Hết";
-            }
-            model.addRow(new Object[]{d.getId(), d.getMenuName(), d.getName(), d.getPrice(), status});
-        }
-        tblDrink.setModel(model);
-    }
-
+    
     private void menuDetail() {
         int selectRow = tblMenu.getSelectedRow();
         if (selectRow >= 0) {
@@ -163,15 +145,6 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
         btnDishRemove = new javax.swing.JButton();
         btnDishLoad = new javax.swing.JButton();
         btnDishFind = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblDrink = new javax.swing.JTable();
-        btnDrinkAdd = new javax.swing.JButton();
-        btnDrinkEdit = new javax.swing.JButton();
-        btnDrinkRemove = new javax.swing.JButton();
-        btnDrinkLoad = new javax.swing.JButton();
-        btnDrinkFind = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -316,10 +289,10 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 428, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -333,11 +306,11 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 452, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -347,18 +320,19 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(141, 218, 146));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setOpaque(false);
 
         jPanel7.setBackground(new java.awt.Color(169, 247, 174));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Món Ăn");
+        jLabel4.setText("THỰC ĐƠN");
 
         tblDish.setBackground(new java.awt.Color(38, 206, 92));
         tblDish.setModel(new javax.swing.table.DefaultTableModel(
@@ -423,19 +397,19 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 621, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(btnDishAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDishEdit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDishRemove)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnDishLoad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnDishFind)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
@@ -445,115 +419,14 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDishAdd)
                     .addComponent(btnDishEdit)
                     .addComponent(btnDishRemove)
                     .addComponent(btnDishLoad)
                     .addComponent(btnDishFind))
-                .addGap(297, 297, 297))
-        );
-
-        jPanel8.setBackground(new java.awt.Color(169, 247, 174));
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Đồ Uống");
-
-        tblDrink.setBackground(new java.awt.Color(109, 245, 149));
-        tblDrink.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Mã", "Danh Mục", "Tên", "Giá", "Trạng Thái"
-            }
-        ));
-        jScrollPane3.setViewportView(tblDrink);
-
-        btnDrinkAdd.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnDrinkAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/icons8_add_new_32px_1.png"))); // NOI18N
-        btnDrinkAdd.setText("Thêm");
-        btnDrinkAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDrinkAddActionPerformed(evt);
-            }
-        });
-
-        btnDrinkEdit.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnDrinkEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/icons8_edit_property_32px.png"))); // NOI18N
-        btnDrinkEdit.setText("Sửa");
-        btnDrinkEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDrinkEditActionPerformed(evt);
-            }
-        });
-
-        btnDrinkRemove.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnDrinkRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/icons8_shopping_basket_remove_32px.png"))); // NOI18N
-        btnDrinkRemove.setText("Xóa");
-        btnDrinkRemove.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDrinkRemoveActionPerformed(evt);
-            }
-        });
-
-        btnDrinkLoad.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnDrinkLoad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/icons8_reset_32px.png"))); // NOI18N
-        btnDrinkLoad.setText("Tải Lại");
-        btnDrinkLoad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDrinkLoadActionPerformed(evt);
-            }
-        });
-
-        btnDrinkFind.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnDrinkFind.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/icons8_Find_iPhone_32px.png"))); // NOI18N
-        btnDrinkFind.setText("Tìm Kiếm");
-        btnDrinkFind.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDrinkFindActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(btnDrinkAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDrinkEdit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDrinkRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDrinkLoad, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnDrinkFind)
-                        .addGap(0, 40, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDrinkAdd)
-                    .addComponent(btnDrinkEdit)
-                    .addComponent(btnDrinkRemove)
-                    .addComponent(btnDrinkLoad)
-                    .addComponent(btnDrinkFind))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(83, 83, 83))
         );
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -561,15 +434,10 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -584,8 +452,11 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -687,36 +558,6 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
 // TODO add your handling code here:
     }//GEN-LAST:event_btnDishLoadActionPerformed
 
-    private void btnDrinkAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrinkAddActionPerformed
-        IFAddDrink IFAD = new IFAddDrink(true, this);
-        IFAD.setVisible(true);
-        loadDrinkList(null);
-// TODO add your handling code here:
-    }//GEN-LAST:event_btnDrinkAddActionPerformed
-
-    private void btnDrinkEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrinkEditActionPerformed
-        int drinkId = (int) tblDrink.getValueAt(tblDrink.getSelectedRow(), 0);
-        IFEditDrink IFE = new IFEditDrink(true, this, drinkId);
-        IFE.setVisible(true);
-        this.drinkId = drinkId;
-// TODO add your handling code here:
-    }//GEN-LAST:event_btnDrinkEditActionPerformed
-
-    private void btnDrinkRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrinkRemoveActionPerformed
-        IFRemoveDrink IFR = new IFRemoveDrink(true, this);
-        IFR.setVisible(true);// TODO add your handling code here:
-    }//GEN-LAST:event_btnDrinkRemoveActionPerformed
-
-    private void btnDrinkLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrinkLoadActionPerformed
-        loadDrinkList(null);
-        JOptionPane.showMessageDialog(null, "Làm mới thành công");
-    }//GEN-LAST:event_btnDrinkLoadActionPerformed
-
-    private void btnDrinkFindActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDrinkFindActionPerformed
-        IFFindDrink IFD = new IFFindDrink(true, this);
-        IFD.setVisible(true);        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDrinkFindActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDishAdd;
@@ -724,11 +565,6 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
     private javax.swing.JButton btnDishFind;
     private javax.swing.JButton btnDishLoad;
     private javax.swing.JButton btnDishRemove;
-    private javax.swing.JButton btnDrinkAdd;
-    private javax.swing.JButton btnDrinkEdit;
-    private javax.swing.JButton btnDrinkFind;
-    private javax.swing.JButton btnDrinkLoad;
-    private javax.swing.JButton btnDrinkRemove;
     private javax.swing.JButton btnMenuAdd;
     private javax.swing.JButton btnMenuEdit;
     private javax.swing.JButton btnMenuLoad;
@@ -738,22 +574,18 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lbMess;
     private javax.swing.JTable tblDish;
-    private javax.swing.JTable tblDrink;
     private javax.swing.JTable tblMenu;
     private javax.swing.JTextField txtName;
     // End of variables declaration//GEN-END:variables
@@ -806,49 +638,6 @@ public class IFMenu extends javax.swing.JInternalFrame implements IFDelete.Callb
     @Override
     public void findDish(String name) {
         loadDishList(name);
-    }
-
-    @Override
-    public void AddDrink(JTextField txtDrinkName, JTextField txtDrinkPrice, JComboBox<Menu> cbxDrink, JRadioButton statusDrink1, JRadioButton statusDrink2) {
-        String name = txtDrinkName.getText();
-        float price = Float.parseFloat(txtDrinkPrice.getText());
-        int menuId = ((Menu) cbxDrink.getSelectedItem()).getId();
-        boolean status = true;
-        if (statusDrink1.isSelected()) {
-            status = true;
-        } else {
-            status = false;
-        }
-        drink = new Drink(name, price, menuId, status);
-        drinkDAO = new DrinkDAOImp();
-        drinkDAO.add(drink);
-        loadDrinkList(null);
-    }
-
-    @Override
-    public void EditDrink(int id, JTextField txtName, JTextField txtPrice, JComboBox<Menu> cbxDrink, JRadioButton statusDrink1, JRadioButton statusDrink2) {
-        drink = new Drink();
-        drinkDAO = new DrinkDAOImp();
-        drink.setId(this.drinkId);
-        drink.setName(txtName.getText());
-        drink.setPrice(Float.parseFloat(txtPrice.getText()));
-        drink.setMenuId(((Menu) cbxDrink.getSelectedItem()).getId());
-        drink.setStatus(statusDrink1.isSelected());
-        drinkDAO.edit(drink);
-        loadDrinkList(null);
-    }
-
-    @Override
-    public void removeDrink(int id) {
-        int drinkId = (int) tblDrink.getValueAt(tblDrink.getSelectedRow(), 0);
-        drinkDAO = new DrinkDAOImp();
-        drinkDAO.remove(drinkId);
-        loadDrinkList(null);
-    }
-
-    @Override
-    public void findDrink(String name) {
-        loadDrinkList(name);
     }
 
 }

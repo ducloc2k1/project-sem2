@@ -18,14 +18,14 @@ import bkap.qlnh.util.DConnection;
  *
  * @author ntan2
  */
-public class BillDetailDAOImp implements BillDetailDAO{
+public class BillDetailDAOImp implements BillDetailDAO {
 
     @Override
     public List<BillDetail> lstBillDetail() {
         List<BillDetail> lstBillDetail = new ArrayList<>();
         ResultSet rs = DConnection.executeQuery("{call getAllBillDetail()}");
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 BillDetail bd = new BillDetail();
                 bd.setId(rs.getInt("id"));
                 bd.setBillId(rs.getInt("billId"));
@@ -46,12 +46,16 @@ public class BillDetailDAOImp implements BillDetailDAO{
 
     @Override
     public void add(BillDetail bd) {
-        DConnection.executeUpdate("{call addBillDetail(?,?,?,?,?,?,?,?)}", bd.getBillId(), bd.getDrinkId(),bd.getDishId(),bd.getDrinkQuantity(),bd.getDishQuantity(),bd.getTotalPrice(),bd.getDiscount(),bd.isStatus());
+        DConnection.executeUpdate("{call addBillDetail(?,?,?,?,?,?)}", bd.getBillId(),
+                bd.getDishId(), bd.getDishQuantity(),
+                bd.getTotalPrice(), bd.getDiscount(), bd.isStatus());
     }
 
     @Override
     public void edit(BillDetail bd) {
-        DConnection.executeUpdate("{call editBillDetail(?,?,?,?,?,?,?,?,?)}",bd.getId(), bd.getBillId(), bd.getDrinkId(),bd.getDishId(),bd.getDrinkQuantity(),bd.getDishQuantity(),bd.getTotalPrice(),bd.getDiscount(),bd.isStatus());
+        DConnection.executeUpdate("{call editBillDetail(?,?,?,?,?,?,?)}", bd.getId(),
+                bd.getBillId(), bd.getDishId(), bd.getDishQuantity(),
+                bd.getTotalPrice(), bd.getDiscount(), bd.isStatus());
     }
 
     @Override
@@ -61,15 +65,13 @@ public class BillDetailDAOImp implements BillDetailDAO{
 
     @Override
     public BillDetail find(int id) {
-        ResultSet rs = DConnection.executeQuery("{call findBillDetail(?)}",id);
+        ResultSet rs = DConnection.executeQuery("{call findBillDetail(?)}", id);
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 BillDetail bd = new BillDetail();
                 bd.setId(rs.getInt("id"));
                 bd.setBillId(rs.getInt("billId"));
-                bd.setDrinkId(rs.getInt("drinkId"));
                 bd.setDishId(rs.getInt("dishId"));
-                bd.setDrinkQuantity(rs.getInt("drinkQuantity"));
                 bd.setDishQuantity(rs.getInt("dishQuantity"));
                 bd.setTotalPrice(rs.getFloat("totalPrice"));
                 bd.setDiscount(rs.getFloat("discount"));
@@ -81,5 +83,5 @@ public class BillDetailDAOImp implements BillDetailDAO{
         }
         return null;
     }
-    
+
 }

@@ -13,7 +13,7 @@ import java.util.List;
  * @author ntan2
  */
 public interface TableDAO {
-    List<Table>lstTable();
+    List<Table>lstTable(String name);
     void add(Table t);
     void edit(Table t);
     void remove(int id);

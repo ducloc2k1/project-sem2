@@ -16,10 +16,26 @@ import java.util.logging.Logger;
  * @author ntan2
  */
 public class Table {
+
     private int id;
     private String name;
     private int idPosition;
     private boolean status;
+    private String namePosition;
+
+    public Table(String name, int idPosition, boolean status) {
+        this.name = name;
+        this.idPosition = idPosition;
+        this.status = status;
+    }
+
+    public String getNamePosition() {
+        return namePosition;
+    }
+
+    public void setNamePosition(String namePosition) {
+        this.namePosition = namePosition;
+    }
 
     public Table(int id, String name, int idPosition, boolean status) {
         this.id = id;

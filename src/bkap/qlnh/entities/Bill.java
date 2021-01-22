@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * @author ntan2
  */
 public class Bill {
-    private int id;
+    public int id;
     private boolean status;
     private float totalCost;
     private Timestamp stareDate;

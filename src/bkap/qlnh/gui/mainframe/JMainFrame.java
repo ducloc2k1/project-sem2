@@ -9,7 +9,9 @@ import bkap.qlnh.entities.Employee;
 import bkap.qlnh.gui.dish.IFMenu;
 import bkap.qlnh.gui.order.OrderFrame;
 import bkap.qlnh.gui.employee.IFEmployee;
+import bkap.qlnh.gui.login.LoginForm;
 import bkap.qlnh.gui.resource.IFResource;
+import bkap.qlnh.gui.table.IFTable;
 import java.awt.Toolkit;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -28,22 +30,20 @@ public class JMainFrame extends javax.swing.JFrame {
     IFEmployee IFE;
     IFResource IFR;
     IFMenu IFM;
+    Employee employee;
 
     /**
      * Creates new form JMainFrame
      */
     public JMainFrame(Employee employee) {
-        setResizable(false);
+        this.employee = employee;
+        setResizable(true);
         initComponents();
         Toolkit tk = Toolkit.getDefaultToolkit();
         setSize(((int) tk.getScreenSize().getWidth()),
                 (int) tk.getScreenSize().getHeight());
         if (employee.getRoleId() == 2) {
             jMenu2.setEnabled(false);
-            jMenu3.setEnabled(false);
-            jMenu4.setEnabled(false);
-            jMenu5.setEnabled(false);
-            jMenu6.setEnabled(false);
         }
         try {
             //Set the required look and feel
@@ -77,11 +77,14 @@ public class JMainFrame extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu7 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu8 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jLabel1.setBackground(new java.awt.Color(102, 51, 0));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -122,8 +125,8 @@ public class JMainFrame extends javax.swing.JFrame {
         });
         jMenuBar1.add(jMenu7);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/food_30px.png"))); // NOI18N
-        jMenu2.setText("THỰC ĐƠN");
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/business_management_30px.png"))); // NOI18N
+        jMenu2.setText("QUẢN LÝ");
         jMenu2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jMenu2.setMargin(new java.awt.Insets(10, 30, 10, 30));
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -131,57 +134,89 @@ public class JMainFrame extends javax.swing.JFrame {
                 jMenu2MouseClicked(evt);
             }
         });
+
+        jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/food_20px.png"))); // NOI18N
+        jMenuItem3.setText("Thực đơn");
+        jMenuItem3.setMargin(new java.awt.Insets(8, 5, 8, 5));
+        jMenuItem3.setPreferredSize(new java.awt.Dimension(160, 42));
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/ingredients_20px.png"))); // NOI18N
+        jMenuItem4.setText("Nguyên liệu");
+        jMenuItem4.setMargin(new java.awt.Insets(8, 5, 8, 5));
+        jMenuItem4.setPreferredSize(new java.awt.Dimension(160, 42));
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
+        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/worker_20px.png"))); // NOI18N
+        jMenuItem5.setText("Nhân viên");
+        jMenuItem5.setMargin(new java.awt.Insets(8, 5, 8, 5));
+        jMenuItem5.setPreferredSize(new java.awt.Dimension(160, 42));
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/bill_20px.png"))); // NOI18N
+        jMenuItem6.setText("Hóa đơn");
+        jMenuItem6.setMargin(new java.awt.Insets(8, 5, 8, 5));
+        jMenuItem6.setPreferredSize(new java.awt.Dimension(160, 42));
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/table_20px.png"))); // NOI18N
+        jMenuItem7.setText("Bàn");
+        jMenuItem7.setMargin(new java.awt.Insets(8, 5, 8, 5));
+        jMenuItem7.setPreferredSize(new java.awt.Dimension(160, 42));
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
+
         jMenuBar1.add(jMenu2);
-
-        jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/flour_30px.png"))); // NOI18N
-        jMenu3.setText("NGUYÊN LIỆU");
-        jMenu3.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jMenu3.setMargin(new java.awt.Insets(10, 30, 10, 30));
-        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu3MouseClicked(evt);
-            }
-        });
-        jMenu3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu3ActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(jMenu3);
-
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/profile_30px.png"))); // NOI18N
-        jMenu4.setText("NHÂN VIÊN");
-        jMenu4.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jMenu4.setMargin(new java.awt.Insets(10, 30, 10, 30));
-        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu4MouseClicked(evt);
-            }
-        });
-        jMenu4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu4ActionPerformed(evt);
-            }
-        });
-        jMenuBar1.add(jMenu4);
-
-        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/bill.png"))); // NOI18N
-        jMenu5.setText("HÓA ĐƠN");
-        jMenu5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jMenu5.setMargin(new java.awt.Insets(10, 30, 10, 30));
-        jMenuBar1.add(jMenu5);
-
-        jMenu6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/report_file_30px.png"))); // NOI18N
-        jMenu6.setText("THỐNG KÊ");
-        jMenu6.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jMenu6.setMargin(new java.awt.Insets(10, 30, 10, 30));
-        jMenuBar1.add(jMenu6);
-        jMenuBar1.add(Box.createHorizontalGlue());
 
         jMenu8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/settings_30px.png"))); // NOI18N
         jMenu8.setText("ĐĂNG XUẤT");
         jMenu8.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jMenu8.setMargin(new java.awt.Insets(10, 30, 10, 30));
+
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/info_15px.png"))); // NOI18N
+        jMenuItem1.setText("Thay đổi mật khẩu");
+        jMenuItem1.setMargin(new java.awt.Insets(10, 0, 10, 0));
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem1);
+
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bkap/qlnh/icon/logout_rounded_left_15px.png"))); // NOI18N
+        jMenuItem2.setText("Đăng xuất");
+        jMenuItem2.setMargin(new java.awt.Insets(10, 0, 10, 0));
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu8.add(jMenuItem2);
+
         jMenuBar1.add(jMenu8);
 
         setJMenuBar(jMenuBar1);
@@ -190,7 +225,7 @@ public class JMainFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1485, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1485, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,38 +237,8 @@ public class JMainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenu4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu4ActionPerformed
-        // TODO add your handling code here:
-        //        if(IFE==null){
-        //            IFE = new IFEmployee();
-        //        }
-        //        jDesktopPane1.add(IFE);
-        //        IFE.setVisible(true);
-    }//GEN-LAST:event_jMenu4ActionPerformed
-
-    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
-        // TODO add your handling code here:
-        IFE = new IFEmployee();
-        jDesktopPane1.add(IFE);
-        IFE.setVisible(true);
-    }//GEN-LAST:event_jMenu4MouseClicked
-
-    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_jMenu3ActionPerformed
-
-    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
-        IFR = new IFResource();
-        jDesktopPane1.add(IFR);
-        IFR.setVisible(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu3MouseClicked
-
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
-        IFM = new IFMenu();
-        jDesktopPane1.add(IFM);
-        IFM.setVisible(true);
+
     }//GEN-LAST:event_jMenu2MouseClicked
 
     private void jMenu7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu7ActionPerformed
@@ -246,6 +251,47 @@ public class JMainFrame extends javax.swing.JFrame {
         jDesktopPane1.add(orderFrame);
         orderFrame.setVisible(true);
     }//GEN-LAST:event_jMenu7MouseClicked
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        IFM = new IFMenu();
+        jDesktopPane1.add(IFM);
+        IFM.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        IFR = new IFResource();
+        jDesktopPane1.add(IFR);
+        IFR.setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        IFE = new IFEmployee();
+        jDesktopPane1.add(IFE);
+        IFE.setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        PasswordChange passwordChange = new PasswordChange(this.employee);
+        passwordChange.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        LoginForm loginForm = new LoginForm();
+        loginForm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        IFTable iFTable = new IFTable();
+        this.jDesktopPane1.add(iFTable);
+        iFTable.setVisible(true);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,12 +332,15 @@ public class JMainFrame extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     // End of variables declaration//GEN-END:variables
 }

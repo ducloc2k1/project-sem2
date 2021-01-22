@@ -6,26 +6,31 @@
 package bkap.qlnh.gui.resource;
 
 import bkap.qlnh.dao.ResourceDAOImp;
-import bkap.qlnh.entities.Resource;
 import bkap.qlnh.gui.mainframe.IFDelete;
+import bkap.qlnh.entities.Resource;
 import bkap.qlnh.gui.mainframe.IFFind;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-    
+import bkap.qlnh.util.Validation;
+
 /**
  *
  * @author ntan2
  */
-public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.gui.mainframe.IFDelete.CallbackDelete,bkap.qlnh.gui.mainframe.IFFind.CallbackSearch{
+public class IFResource extends javax.swing.JInternalFrame implements IFDelete.CallbackDelete, IFFind.CallbackSearch {
+
     Resource rs;
     ResourceDAOImp rsDAO;
     int id;
+    Validation v;
+
     /**
      * Creates new form IFResource
      */
@@ -39,20 +44,28 @@ public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.
             }
         });
     }
-    private void loadList(String name){
+
+    private void loadList(String name) {
         DefaultTableModel model = (DefaultTableModel) tblResource.getModel();
         model.setRowCount(0);
         rsDAO = new ResourceDAOImp();
         List<Resource> lstResource = new ArrayList<>(rsDAO.lstResource(name));
         for (Resource r : lstResource) {
-            model.addRow(new Object[]{r.getId(),r.getName(),r.getQuantity(),r.getSupplier()
-                                    ,new Date(r.getDate().getTime() +172800000),r.isStatus()});
+            String status = "";
+            if (r.isStatus() == true) {
+                status = "Còn hàng";
+            } else {
+                status = "Hết hàng";
+            }
+            model.addRow(new Object[]{r.getId(), r.getName(), r.getQuantity(), r.getSupplier(),
+                new Date(r.getDate().getTime() + 172800000), status});
         }
         tblResource.setModel(model);
     }
-    private void detail(){
+
+    private void detail() {
         int selectRow = tblResource.getSelectedRow();
-        if(selectRow >= 0){
+        if (selectRow >= 0) {
             int id = (int) tblResource.getValueAt(selectRow, 0);
             rsDAO = new ResourceDAOImp();
             rs = new Resource();
@@ -60,15 +73,16 @@ public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.
             txtName.setText(rs.getName());
             txtQuantity.setText(String.valueOf(rs.getQuantity()));
             txtSupplier.setText(rs.getSupplier());
-            jDate.setDate(new Date(rs.getDate().getTime()+172800000));
-            if(rs.isStatus()){
+            jDate.setDate(new Date(rs.getDate().getTime() + 172800000));
+            if (rs.isStatus()) {
                 jRadioButton1.setSelected(true);
-            }else{
+            } else {
                 jRadioButton2.setSelected(true);
             }
             this.id = rs.getId();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,9 +110,10 @@ public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.
         btnEdit = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
+        jDate = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
-        jDate = new com.toedter.calendar.JDateChooser();
+        lbMess = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblResource = new javax.swing.JTable();
@@ -201,6 +216,9 @@ public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.
             }
         });
 
+        lbMess.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbMess.setForeground(new java.awt.Color(255, 51, 51));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -226,16 +244,17 @@ public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtSupplier)
+                                    .addComponent(jDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jRadioButton1)
                                         .addGap(18, 18, 18)
                                         .addComponent(jRadioButton2)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(lbMess, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(114, 114, 114))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,9 +262,9 @@ public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.
                         .addComponent(btnReset)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnExit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)
-                        .addGap(42, 42, 42))))
+                        .addContainerGap(47, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,24 +282,26 @@ public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.
                     .addComponent(jLabel4)
                     .addComponent(txtSupplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jRadioButton1)
                         .addComponent(jRadioButton2)))
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lbMess, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdd)
                     .addComponent(btnEdit)
                     .addComponent(btnRemove)
                     .addComponent(btnReset)
-                    .addComponent(jButton1)
-                    .addComponent(btnExit))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnExit)
+                    .addComponent(jButton1))
+                .addContainerGap())
         );
 
         jPanel3.setBackground(new java.awt.Color(0, 204, 204));
@@ -333,9 +354,9 @@ public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 18, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -357,24 +378,48 @@ public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.
     }//GEN-LAST:event_txtQuantityActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-//         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-           String name = txtName.getText();
-           int quantity = Integer.parseInt(txtQuantity.getText());
-           String supplier = txtSupplier.getText();
-           boolean status = true;
-           if(jRadioButton1.isSelected()){
-               status=true;
-           }else{
-               status=false;
-           }
-           rs = new Resource(name,quantity,supplier,new Date(jDate.getDate().getTime()),status);
-           rsDAO = new ResourceDAOImp();
-           rsDAO.add(rs);
-           loadList(null);
+        if (txtName.getText().length() == 0 && txtQuantity.getText().length() == 0
+                && txtSupplier.getText().length() == 0) {
+            lbMess.setText("Vui lòng nhập đủ các trường");
+        } else if (txtName.getText().length() == 0) {
+            lbMess.setText("Vui lòng nhập tên");
+        } else if (txtQuantity.getText().length() == 0) {
+            lbMess.setText("Vui lòng nhập số lượng");
+        } else if (!v.CheckNumeric(txtQuantity.getText())) {
+            lbMess.setText("Vui lòng nhập số");
+        } else if (txtSupplier.getText().length() == 0) {
+            lbMess.setText("Vui lòng nhập nhà sản xuất");
+        } else {
+            String name = txtName.getText();
+            int quantity = Integer.parseInt(txtQuantity.getText());
+            String supplier = txtSupplier.getText();
+            boolean status = true;
+            if (jRadioButton1.isSelected()) {
+                status = true;
+            } else {
+                status = false;
+            }
+            rs = new Resource(name, quantity, supplier, new Date(jDate.getDate().getTime()), status);
+            rsDAO = new ResourceDAOImp();
+            rsDAO.add(rs);
+            loadList(null);
+        }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        if (txtName.getText().length() == 0 && txtQuantity.getText().length() == 0
+                && txtSupplier.getText().length() == 0) {
+            lbMess.setText("Vui lòng nhập đủ các trường");
+        } else if (txtName.getText().length() == 0) {
+            lbMess.setText("Vui lòng nhập tên");
+        } else if (txtQuantity.getText().length() == 0) {
+            lbMess.setText("Vui lòng nhập số lượng");
+        } else if (!v.CheckNumeric(txtQuantity.getText())) {
+            lbMess.setText("Vui lòng nhập số");
+        } else if (txtSupplier.getText().length() == 0) {
+            lbMess.setText("Vui lòng nhập nhà sản xuất");
+        } else {
             rs = new Resource();
             rsDAO = new ResourceDAOImp();
             rs.setId(this.id);
@@ -385,33 +430,37 @@ public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.
             rs.setStatus(jRadioButton1.isSelected());
             rsDAO.edit(rs);
             loadList(null);
+        }
+
 // TODO add your handling code here:
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-            IFDelete IFD = new IFDelete(true, this);
-            IFD.setVisible(true);
+        IFDelete IFD = new IFDelete(true, this);
+        IFD.setVisible(true);
 // TODO add your handling code here:
     }//GEN-LAST:event_btnRemoveActionPerformed
 
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-            txtName.setText("");
-            txtQuantity.setText("");
-            txtSupplier.setText("");
-            jDate.setDate(null);
-            loadList(null);
-    // TODO add your handling code here:
+        txtName.setText("");
+        txtQuantity.setText("");
+        txtSupplier.setText("");
+        jDate.setDate(null);
+        lbMess.setText(" ");
+        loadList(null);
+        JOptionPane.showMessageDialog(null, "Tải lại thành công");
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnResetActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-            dispose();
+        dispose();
 // TODO add your handling code here:
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         IFFind IFF = new IFFind(true, this);
         IFF.setVisible(true);
-            
+
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -437,6 +486,7 @@ public class IFResource extends javax.swing.JInternalFrame implements bkap.qlnh.
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbMess;
     private javax.swing.JTable tblResource;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtQuantity;
